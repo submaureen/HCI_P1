@@ -67,7 +67,7 @@ class Panel {
         fill(255);
         rect(buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h);
         fill(0);
-        textSize(20);
+        textSize(30);
         textAlign(CENTER, CENTER);
         text(buttons[i].text, buttons[i].x + buttons[i].w/2, buttons[i].y + buttons[i].h/2);
      }
@@ -83,12 +83,12 @@ public void setup(){
   background(210, 212, 200);
   println("me? gongaga");
   
-  panels = new Panel[5];
+  panels = new Panel[4];
   
   // the side bevel or whatever
   
   fill(210, 200, 200);
-  rect(5, 5, 365, 690);
+  rect(5, 5, 365, 680);
   
   // this is the time panel
   fill(175, 62, 77);
@@ -114,15 +114,7 @@ public void draw(){
       String displayString = String.format("%02d:%02d", display/1000/60, display/1000%60);
       text(displayString, 190 , 60);
       println(display/1000);
-      if (displayString.equals("00:00"))
-      {
-       text("Done!", 200 , 65);
-       fill(175, 62, 77);
-       rect(18, 30, 340, 75);
-       free= true;
-       target = 0;
-      
-      }
+      //a second has passed! render some stuff
     }
   }
   if (target == 0 && free){
@@ -149,22 +141,16 @@ public void createTop(){
   panels[0].drawButtons();
   
   // stuff that appears upon clicking first button
-  panels[2] = new Panel (40, 120, 300, 200, 4);
+  panels[2] = new Panel (50, 120, 300, 200, 4);
   panels[2].buttons[0] = new Button(55, 135, 270, 35, "Beef");
   panels[2].buttons[1] = new Button(55, 175, 270, 35, "Chicken");
   panels[2].buttons[2] = new Button(55, 215, 270, 35, "Fish");
   panels[2].buttons[3] = new Button(55, 255, 270, 35, "Pork");
   
   // appears upon clicking the second button
-  panels[3] = new Panel (55, 120, 300, 200, 2);
+  panels[3] = new Panel (50, 120, 300, 200, 2);
   panels[3].buttons[0] = new Button(55, 135, 270, 35, "Room Temperature");
   panels[3].buttons[1] = new Button(55, 175, 270, 35, "Refrigerated");
-  
-  // stuff that appears upon clicking first button
-  panels[4] = new Panel (40, 120, 300, 200, 3);
-  panels[4].buttons[0] = new Button(55, 135, 270, 35, "Melt Chocolate");
-  panels[4].buttons[1] = new Button(55, 175, 270, 35, "Melt Butter");
-  panels[4].buttons[2] = new Button(55, 215, 270, 35, "Soften Cream Cheese");
 
 
 
@@ -173,26 +159,26 @@ public void createTop(){
 public void createBottom()
 {
   // Making the bottom panel
-  panels[1] = new Panel (40, 330, 300, 360, 14);
+  panels[1] = new Panel (40, 330, 300, 350, 14);
   fill(224, 226, 219);
   rect(panels[1].x, panels[1].y, panels[1].w, panels[1].h);
 
   // Number clicking
 
-  panels[1].buttons[0] = new Button(60, 340, 60, 60);
+  panels[1].buttons[0] = new Button(80, 340, 60, 60);
   panels[1].buttons[1] = new Button(160, 340, 60, 60);
-  panels[1].buttons[2] = new Button(260, 340, 60, 60);
-  panels[1].buttons[3] = new Button(60, 410, 60, 60);
+  panels[1].buttons[2] = new Button(240, 340, 60, 60);
+  panels[1].buttons[3] = new Button(80, 410, 60, 60);
   panels[1].buttons[4] = new Button(160, 410, 60, 60);
-  panels[1].buttons[5] = new Button(260, 410, 60, 60);
-  panels[1].buttons[6] = new Button(60, 480, 60, 60);
+  panels[1].buttons[5] = new Button(240, 410, 60, 60);
+  panels[1].buttons[6] = new Button(80, 480, 60, 60);
   panels[1].buttons[7] = new Button(160, 480, 60, 60);
-  panels[1].buttons[8] = new Button(260, 480, 60, 60);
-  panels[1].buttons[9] = new Button(60, 550,60, 60);
+  panels[1].buttons[8] = new Button(240, 480, 60, 60);
+  panels[1].buttons[9] = new Button(80, 550,60, 60);
   panels[1].buttons[10] = new Button(160, 550, 60, 60);
-  panels[1].buttons[11] = new Button(260, 550, 60, 60);
-  panels[1].buttons[12] = new Button(60, 620, 60, 60);
-  panels[1].buttons[13] = new Button(160, 620, 160, 60);
+  panels[1].buttons[11] = new Button(240, 550, 60, 60);
+  panels[1].buttons[12] = new Button(80, 620, 60, 60);
+  panels[1].buttons[13] = new Button(160, 620, 130, 60);
     
   for (int i = 0; i < panels[1].buttons.length; i++)
   {
@@ -208,7 +194,6 @@ public void createBottom()
     }
     if(i == 9)
     {
-       textSize(15);
       text("Power\nLevel", panels[1].buttons[i].x + (panels[1].buttons[i].w/2), panels[1].buttons[i].y + (panels[1].buttons[i].h/2));
     }
     if(i == 10)
@@ -217,7 +202,6 @@ public void createBottom()
     }
     if(i == 11)
     {
-       textSize(15);
       text(" + 30s", panels[1].buttons[i].x + (panels[1].buttons[i].w/2), panels[1].buttons[i].y + (panels[1].buttons[i].h/2));
     }
     if(i == 12)
@@ -261,36 +245,6 @@ print(screen);
       {
         println(panels[2].buttons[i].text);
         defrostChoice(panels[2].buttons[i].text);
-        break;
-      }
-     }
-  }
-  
-  else if (mouseX >= panels[3].x && mouseX <= panels[3].x + panels[3].w &&
-           mouseY >= panels[3].y && mouseY <= panels[3].y + panels[3].h && screen == "REHEAT") {
-     // check chicken stuff or whatever
-     for (int i = 0; i < panels[3].num + 1; i++)
-     {
-       if(mouseX >= panels[3].buttons[i].x && mouseX <= panels[3].buttons[i].x + panels[3].buttons[i].w &&
-      mouseY >= panels[3].buttons[i].y && mouseY <= panels[3].buttons[i].y + panels[3].buttons[i].h)
-      {
-        println(panels[3].buttons[i].text);
-        reheatChoice(panels[3].buttons[i].text);
-        break;
-      }
-     }
-  }
-  
-  else if (mouseX >= panels[4].x && mouseX <= panels[4].x + panels[4].w &&
-           mouseY >= panels[4].y && mouseY <= panels[4].y + panels[4].h && screen == "HELPER") {
-     // check chicken stuff or whatever
-     for (int i = 0; i < panels[4].num + 1; i++)
-     {
-       if(mouseX >= panels[4].buttons[i].x && mouseX <= panels[4].buttons[i].x + panels[4].buttons[i].w &&
-      mouseY >= panels[4].buttons[i].y && mouseY <= panels[4].buttons[i].y + panels[4].buttons[i].h)
-      {
-        println(panels[4].buttons[i].text);
-        helperChoice(panels[4].buttons[i].text);
         break;
       }
      }
@@ -367,12 +321,6 @@ print(screen);
           
   }
   
-
-      updateInput();
-    }
-  
-    // cancel button
-  
   if (mouseX >= panels[1].buttons[12].x && mouseX <= panels[1].buttons[12].x + panels[1].buttons[12].w &&
       mouseY >= panels[1].buttons[12].y && mouseY <= panels[1].buttons[12].y + panels[1].buttons[12].h) 
   {
@@ -380,16 +328,18 @@ print(screen);
     print("CLEARING");
     screen = "BASE";
     target = 0;
-
+    free = true;
     input = "";
-    
-        free = true;
           
   }
+      updateInput();
+    }
+  
+  
   // start button
   
  if (mouseX >= panels[1].buttons[13].x && mouseX <= panels[1].buttons[13].x + panels[1].buttons[13].w &&
-      mouseY >= panels[1].buttons[13].y && mouseY <= panels[1].buttons[13].y + panels[1].buttons[13].h && target == 0) 
+      mouseY >= panels[1].buttons[13].y && mouseY <= panels[1].buttons[13].y + panels[1].buttons[13].h) 
   {
     print("start button");
     println(input);
@@ -404,7 +354,7 @@ print(screen);
     else {
       target = millis() + (int(input) * 1000) + 1000;
     }
-    input = "abcd";
+
     // text(target, 200 , 65);
           
   }
@@ -426,32 +376,6 @@ void clickedReheat() {
   
 }
 
-
-void clickedHelper() {
-  screen = "HELPER";
-  panels[4].drawButtons();
-  
-}
-
-
-void topPanelChoice(String choice) {
-
-  switch(choice) {
-    case "Auto Defrost":
-    clickedAutoDefrost();
-      break;
-    case "Reheat":
-      clickedReheat();
-    case "Handy Helper":
-    clickedHelper();
-      break;
-
-    default:
-      break;
-     
-      
-  }
-}
 void defrostChoice(String choice)
 {
   print(choice);
@@ -477,42 +401,33 @@ void defrostChoice(String choice)
     target = millis() + 1000 + (duration*1000);
 }
 
-void helperChoice(String choice)
-{
-  print(choice);
-  int duration = 0;
+void topPanelChoice(String choice) {
+
   switch(choice) {
-    case "Melt Chocolate":
-      duration = 31;
+    case "Auto Defrost":
+    clickedAutoDefrost();
       break;
-    case "Melt Butter":
-      duration = 46;
+    case "Reheat":
+      clickedReheat();
+    case "Handy Helper":
+    println("yep he's handy");
       break;
-    case "Soften Cream Cheese":
-      duration = 41;
-      break;
+
     default:
       break;
      
       
   }
-    target = millis() + 1000 + (duration*1000);
 }
 
 void reheatChoice(String choice)
 {
-    int duration = 0;
   switch(choice) {
     case "Room Temperature":
-    duration = 20;
     break;
     case "Refrigerated":
-    duration = 40;
-    break;
-    default:
     break;
   }
-      target = millis() + 1000 + (duration*1000);
 }
 
 void updateInput() {
