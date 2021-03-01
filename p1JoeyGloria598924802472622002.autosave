@@ -1,0 +1,137 @@
+import java.util.Calendar;
+import java.time.format.DateTimeFormatter;
+import java.lang.Thread;
+
+private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+private int target = 0;
+
+
+private int seconds = 0;
+private Panel panels[];
+import java.util.Timer;
+import java.util.TimerTask;
+
+class Button {
+  int x, y, h, w;
+  
+  Button(int x, int y, int h, int w) {
+    this.x = x;
+    this.y = y;
+    this.h = h;
+    this.w = w;
+  }
+  
+}
+
+class Panel {
+  int x, y, h, w;
+  Button buttons[];
+  
+  Panel(int x, int y, int h, int w, int num) {
+    this.x = x;
+    this.y = y;
+    this.h = h;
+    this.w = w;
+    this.buttons = new Button[num];
+  }
+}
+
+public void setup(){
+  size(400, 650);
+  frameRate(30);
+  textAlign(CENTER, CENTER);
+  background(210, 212, 200);
+  println("me? gongaga");
+  
+  panels = new Panel[2];
+  fill(175, 62, 77);
+  rect(30, 30, 340, 75);
+  createTop();
+  createBottom();
+}
+
+public void draw(){
+  // we know there's 30 seconds to count
+  // we can take the current time and add the seconds to it bit by bit
+  
+  if (target != millis())
+  {
+    int display = target - millis();
+    if (display % 1000 > 0)
+    {
+      println(display%1000);
+      fill(175, 62, 77);
+      rect(30, 30, 340, 75);
+      fill(22, 90, 77);
+      textSize(72);
+      println(display/1000);
+      text(display/1000, 200 , 70);
+      //a second has passed! render some stuff
+    }
+  }
+}
+
+public void createTop(){
+  panels[0] = new Panel (50, 120, 300, 200, 6);
+  fill(22, 90, 77);
+  rect(panels[0].x, panels[0].y, panels[0].h, panels[0].w);
+  panels[0].buttons[0] = new Button(60, 130, 90, 80);
+  fill(175, 62, 77);
+  rect(panels[0].buttons[0].x, panels[0].buttons[0].y, panels[0].buttons[0].h, panels[0].buttons[0].w);
+ 
+
+
+}
+
+public void createBottom()
+{
+  // Making the bottom panel
+  panels[1] = new Panel (50, 330, 300, 300, 12);
+  fill(224, 226, 219);
+  rect(panels[1].x, panels[1].y, panels[1].h, panels[1].w);
+
+  // Number clicking
+  fill(175, 62, 77);
+  panels[1].buttons[0] = new Button(60, 340, 80, 80);
+  panels[1].buttons[1] = new Button(120, 340, 60, 60);
+  panels[1].buttons[2] = new Button(180, 340,60, 60);
+  panels[1].buttons[3] = new Button(60, 400, 60, 60);
+  panels[1].buttons[4] = new Button(120, 400, 60, 60);
+  panels[1].buttons[5] = new Button(180, 400, 60, 60);
+  panels[1].buttons[6] = new Button(60, 460, 60, 60);
+  panels[1].buttons[7] = new Button(120, 460, 60, 60);
+  panels[1].buttons[8] = new Button(180, 460, 60, 60);
+  panels[1].buttons[9] = new Button(60, 520,60, 60);
+  panels[1].buttons[10] = new Button(120, 520, 60, 60);
+  panels[1].buttons[11] = new Button(180, 520, 60, 60);
+    
+  for (int i = 0; i < panels[1].buttons.length; i++)
+  {
+    println("going");
+    rect(panels[1].buttons[i].x, panels[1].buttons[i].y, panels[1].buttons[i].h, panels[1].buttons[i].w);
+  }
+}
+public void mousePressed() {
+  if (mouseX >= panels[0].buttons[0].x && mouseX <= panels[0].buttons[0].x + panels[0].buttons[0].w &&
+      mouseY >= panels[0].buttons[0].y && mouseY <= panels[0].buttons[0].y + panels[0].buttons[0].h) {
+    //fill(224, 226, 219);
+    //rect(panels[0].x, panels[0].y, panels[0].h, panels[0].w);
+    print("clicked in top panel button");
+    clickedAutoDefrost();
+  }
+  else if (mouseX >= panels[1].x && mouseX <= panels[1].x + panels[1].w &&
+      mouseY >= panels[1].y && mouseY <= panels[1].y + panels[1].h){
+        println("clicked in bottom panel");
+  
+  }
+}
+
+void clickedAutoDefrost() {
+  target = millis() + 61000;
+  fill(22, 90, 77);
+  textSize(72);
+  String time = "30";
+  text(time, 200 , 70);
+
+}
