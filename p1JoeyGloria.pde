@@ -7,7 +7,8 @@ import java.text.SimpleDateFormat;
 
 DateFormat df = new SimpleDateFormat("HH:mm:ss");
 
-private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+import processing.sound.*;
+SoundFile file;
 
 private int target = 0;
 
@@ -83,6 +84,7 @@ public void setup(){
   textAlign(CENTER, CENTER);
   background(210, 212, 200);
   println("me? gongaga");
+  file = new SoundFile(this, "ding.mp3");
   
   panels = new Panel[5];
   
@@ -113,19 +115,26 @@ public void draw(){
       textSize(72);
       // println(display/1000);
       String displayString = String.format("%02d:%02d", display/1000/60, display/1000%60);
-      text(displayString, 190 , 60);
-      println(display/1000);
+      println(displayString);
       if (displayString.equals("00:00"))
       {
-       text("Done!", 200 , 65);
        fill(175, 62, 77);
        rect(18, 30, 340, 75);
-       free= true;
+       fill(255);
+       text("Done!", 190 , 60);
+       //free= true;
        target = 0;
-      
+       file.play();
+       print(target);
+       print(free);
+      } else {
+        text(displayString, 190 , 60);
+        // println(display/1000);
+        
       }
     }
-  }
+    }
+
   if (target == 0 && free){
           fill(175, 62, 77);
       rect(18, 30, 340, 75);
@@ -368,8 +377,8 @@ print(screen);
           
   }
   
-
       updateInput();
+
     }
   
     // cancel button
@@ -423,6 +432,7 @@ void clickedAutoDefrost() {
 
 void clickedReheat() {
   screen = "REHEAT";
+  println("clickedreheat");
   panels[3].drawButtons();
   
 }
@@ -443,6 +453,7 @@ void topPanelChoice(String choice) {
       break;
     case "Reheat":
       clickedReheat();
+      break;
     case "Handy Helper":
     clickedHelper();
       break;
@@ -475,6 +486,7 @@ void defrostChoice(String choice)
      
       
   }input = "abcd";
+  free = false;
     target = millis() + 1000 + (duration*1000);
 }
 
@@ -498,6 +510,7 @@ void helperChoice(String choice)
       
   }
   input = "abcd";
+    free = false;
     target = millis() + 1000 + (duration*1000);
 }
 
@@ -506,7 +519,7 @@ void reheatChoice(String choice)
     int duration = 0;
   switch(choice) {
     case "Room Temperature":
-    duration = 20;
+    duration = 3;
     break;
     case "Refrigerated":
     duration = 40;
@@ -515,6 +528,7 @@ void reheatChoice(String choice)
     break;
   }
   input = "abcd";
+    free = false;
       target = millis() + 1000 + (duration*1000);
 }
 
@@ -525,17 +539,26 @@ void updateInput() {
   String displayString = "";
   if (input.length () <= 2)
   {
+    println('a');
     int i = int(input);
     displayString = String.format("00:%02d", i);
+
   }
   else 
   {
+      println('a');
       int min_to_sec = int(input.substring(0, input.length() - 2));
       int sec = int(input.substring(input.length() -2 ));
       displayString = String.format("%02d:%02d", min_to_sec, sec);
   
   }
+      if(displayString.equals("00:00")) 
+  {
+    // text(df.format(System.currentTimeMillis()), 190 , 60);
+  }
+  else {
   fill(255);
-  text(displayString, 200 , 65);
+  text(displayString, 190 , 60);
+  }
 
 }

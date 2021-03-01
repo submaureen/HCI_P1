@@ -49,3 +49,7 @@ Additionally, like a lot of microwaves, it would be good for acessibility if mic
 I am assuming that my microwave redesign has this capability. This way, I can choose to REHEAT, then CHICKEN. It will then weigh the CHICKEN and choose a proper time.
 
 Like most microwaves, the screen says done! And emits a noise when the time finishes.
+
+![a swe](./cudewave.png)
+
+youtube link: https://youtu.be/ojAI84uwUEM
