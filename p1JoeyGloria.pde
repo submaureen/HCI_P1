@@ -103,7 +103,7 @@ public void setup(){
 public void draw(){
   // we know there's 30 seconds to count
   // we can take the current time and add the seconds to it bit by bit
-  if (target != millis())
+  if (target != millis() && input != "")
   {
     int display = target - millis();
     if (display % 1000 > 0)
@@ -115,7 +115,7 @@ public void draw(){
       textSize(72);
       // println(display/1000);
       String displayString = String.format("%02d:%02d", display/1000/60, display/1000%60);
-      println(displayString);
+
       if (displayString.equals("00:00"))
       {
        fill(175, 62, 77);
@@ -125,8 +125,7 @@ public void draw(){
        //free= true;
        target = 0;
        file.play();
-       print(target);
-       print(free);
+
       } else {
         text(displayString, 190 , 60);
         // println(display/1000);
@@ -381,6 +380,51 @@ print(screen);
 
     }
   
+  
+  // 30s button
+  
+    if (mouseX >= panels[1].buttons[11].x && mouseX <= panels[1].buttons[11].x + panels[1].buttons[11].w &&
+      mouseY >= panels[1].buttons[11].y && mouseY <= panels[1].buttons[11].y + panels[1].buttons[11].h) 
+  {
+    println("30 add");
+    int calc = int(input);
+    // 00 right now
+    println("the input is");
+    println(input);
+    if (input.length() == 3)
+    {
+      int min_to_sec = int(input.substring(0, input.length() - 2));
+      int sec = int(input.substring(input.length() - 1 ));
+      calc = (min_to_sec * 60) + sec;
+      
+    }
+    else if (input.length() == 4)
+    {
+            int min_to_sec = int(input.substring(0, input.length() - 2));
+      int sec = int(input.substring(input.length() -2 ));
+      calc = (min_to_sec * 60) + sec;
+          calc += 30;
+    }
+    else {
+      print("we r here");
+    calc += 30;
+
+    }
+        int sec = calc%60;
+    int min = calc/60;
+
+    String fixval = String.format("%02d%02d", min, sec);
+    print(fixval);
+    input = String.valueOf(fixval);
+    updateInput();
+    
+    if(!free && target != 0)
+    {
+      target += 30000;
+    }
+          
+  }
+  
     // cancel button
   
   if (mouseX >= panels[1].buttons[12].x && mouseX <= panels[1].buttons[12].x + panels[1].buttons[12].w &&
@@ -401,10 +445,12 @@ print(screen);
  if (mouseX >= panels[1].buttons[13].x && mouseX <= panels[1].buttons[13].x + panels[1].buttons[13].w &&
       mouseY >= panels[1].buttons[13].y && mouseY <= panels[1].buttons[13].y + panels[1].buttons[13].h && target == 0) 
   {
-    print("start button");
+    if (input != "")
+    {
+    println("start button");
     println(input);
     textSize(72);
-    if (input.length() > 2) {
+    if (input.length() > 2 && !input.equals("abcd")) {
       int min_to_sec = int(input.substring(0, input.length() - 2)) * 60;
       int sec = int(input.substring(input.length() -2 ));
       // print(min_to_sec + sec);
@@ -415,6 +461,7 @@ print(screen);
       target = millis() + (int(input) * 1000) + 1000;
     }
     input = "abcd";
+    }
     // text(target, 200 , 65);
           
   }
@@ -533,6 +580,12 @@ void reheatChoice(String choice)
 }
 
 void updateInput() {
+  println("updating input yes sir");
+  if (input.length() == 0)
+  {
+    free = true;
+  }
+  else {
       textSize(72);
   fill(175, 62, 77);
   rect(18, 30, 340, 75);
@@ -559,6 +612,7 @@ void updateInput() {
   else {
   fill(255);
   text(displayString, 190 , 60);
+  }
   }
 
 }
