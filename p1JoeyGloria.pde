@@ -61,10 +61,11 @@ class Panel {
   }
   
   void drawButtons() {
+      fill(224, 226, 219);
     rect(x, y, w, h);
     for (int i = 0; i < num; i++)
      {
-        fill(255);
+  fill(224, 226, 219);
         rect(buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h);
         fill(0);
         textSize(20);
@@ -139,7 +140,7 @@ public void draw(){
 public void createTop(){
   // creating panel 
   panels[0] = new Panel (40, 120, 300, 200, 3);
-  fill(22, 90, 77);
+  fill(224, 226, 219);
   rect(panels[0].x, panels[0].y, panels[0].w, panels[0].h);
   
   // first button
@@ -156,7 +157,7 @@ public void createTop(){
   panels[2].buttons[3] = new Button(55, 255, 270, 35, "Pork");
   
   // appears upon clicking the second button
-  panels[3] = new Panel (55, 120, 300, 200, 2);
+  panels[3] = new Panel (40, 120, 300, 200, 2);
   panels[3].buttons[0] = new Button(55, 135, 270, 35, "Room Temperature");
   panels[3].buttons[1] = new Button(55, 175, 270, 35, "Refrigerated");
   
@@ -473,7 +474,7 @@ void defrostChoice(String choice)
       break;
      
       
-  }
+  }input = "abcd";
     target = millis() + 1000 + (duration*1000);
 }
 
@@ -496,6 +497,7 @@ void helperChoice(String choice)
      
       
   }
+  input = "abcd";
     target = millis() + 1000 + (duration*1000);
 }
 
@@ -512,6 +514,7 @@ void reheatChoice(String choice)
     default:
     break;
   }
+  input = "abcd";
       target = millis() + 1000 + (duration*1000);
 }
 
